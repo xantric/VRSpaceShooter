@@ -58,8 +58,8 @@ public class Spawner : MonoBehaviour
     }
     void DestroyAsteroid(GameObject asteroid)
     {
-        Debug.Log(asteroid.transform.position.z);
-        if (asteroid.transform.position.z < -(10))
+        
+        if (asteroid != null && asteroid.transform.position.z < -(10))
         {
             
             Destroy(asteroid);
