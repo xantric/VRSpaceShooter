@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 11421226}
   - component: {fileID: -1180815802585027312}
   - component: {fileID: 3468492026601875251}
+  - component: {fileID: -5739056391247588953}
   m_Layer: 0
   m_Name: Asteroid 2
   m_TagString: Enemy
@@ -180,6 +181,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-5739056391247588953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa781d46ff406b649bc09662af4fbafc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroySound: {fileID: 8300000, guid: bf2e8eac994a54c42b98e211151186b2, type: 3}
 --- !u!1 &146874
 GameObject:
   m_ObjectHideFlags: 0

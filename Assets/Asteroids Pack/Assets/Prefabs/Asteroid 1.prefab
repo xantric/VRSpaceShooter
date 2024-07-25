@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 5444550}
   - component: {fileID: 11425652}
   - component: {fileID: -6468556103736205770}
+  - component: {fileID: -7550741378064263997}
   m_Layer: 0
   m_Name: Asteroid 1
   m_TagString: Enemy
@@ -271,7 +272,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151664}
   serializedVersion: 4
-  m_Mass: 100
+  m_Mass: 10
   m_Drag: 1
   m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -325,6 +326,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: a06b7d8123805974182a9aee714fe013, type: 3}
+--- !u!114 &-7550741378064263997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa781d46ff406b649bc09662af4fbafc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroySound: {fileID: 8300000, guid: bf2e8eac994a54c42b98e211151186b2, type: 3}
 --- !u!1 &176588
 GameObject:
   m_ObjectHideFlags: 0

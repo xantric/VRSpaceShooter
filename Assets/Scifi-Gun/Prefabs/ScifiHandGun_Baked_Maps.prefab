@@ -112,7 +112,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -312,7 +312,11 @@ MonoBehaviour:
   fireRate: 0.2
   FireSound: {fileID: 8300000, guid: 3e6e981835fdd7a47a027f069ef5a1f2, type: 3}
   ChargingGun: {fileID: 8300000, guid: 91ed85ac2d7064c45a36eed02042c462, type: 3}
-  delayBeforeFiring: 1
+  leftController: {fileID: 0}
+  rightController: {fileID: 0}
+  hapticAmplitude: 0.5
+  hapticDuration: 0.1
+  delayBeforeFiring: 0.2
 --- !u!65 &3131287463145674711
 BoxCollider:
   m_ObjectHideFlags: 0

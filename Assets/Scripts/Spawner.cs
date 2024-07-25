@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject asteroidPrefab;
+    public GameObject[] asteroidPrefab;
     public float spawnRadius;
     public float spawnInterval;
     public float minSize;
@@ -43,7 +43,7 @@ public class Spawner : MonoBehaviour
     GameObject SpawnAsteroid()
     {
         Vector3 spawnPosition = SpawnPosition();
-        GameObject asteroid = Instantiate(asteroidPrefab, spawnPosition, Quaternion.identity);
+        GameObject asteroid = Instantiate(asteroidPrefab[Random.Range(0, asteroidPrefab.Length)], spawnPosition, Quaternion.identity);
         asteroid.AddComponent<AudioSource>();
         float size = Random.Range(minSize, maxSize);
         asteroid.transform.localScale = Vector3.one * size;
