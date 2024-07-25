@@ -32,11 +32,21 @@ public class PistolShoot : MonoBehaviour
     [SerializeField]
     private AudioClip ChargingGun;
 
+    [SerializeField]
+    private XRBaseController leftController;
+    [SerializeField]
+    private XRBaseController rightController;
+    [SerializeField]
+    private float hapticAmplitude = 0.5f;
+    [SerializeField]
+    private float hapticDuration = 0.1f;
+
     private bool isFiring = false;
     private Coroutine fireCoroutine;
     private Coroutine delayCoroutine;
     public float delayBeforeFiring = 1.0f;
     private AudioSource audioSource;
+
     void Start()
     {
         XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
@@ -45,6 +55,7 @@ public class PistolShoot : MonoBehaviour
 
         audioSource = gameObject.AddComponent<AudioSource>();
     }
+
     public void StartShooting(ActivateEventArgs args)
     {
         if (!isFiring)
@@ -53,6 +64,7 @@ public class PistolShoot : MonoBehaviour
             fireCoroutine = StartCoroutine(StartFiringAfterDelay());
         }
     }
+
     void StopShooting(DeactivateEventArgs args)
     {
         if (isFiring)
@@ -70,6 +82,7 @@ public class PistolShoot : MonoBehaviour
             }
         }
     }
+
     private IEnumerator StartFiringAfterDelay()
     {
         if (ChargingGun != null && audioSource != null)
@@ -79,6 +92,7 @@ public class PistolShoot : MonoBehaviour
         yield return new WaitForSeconds(delayBeforeFiring);
         fireCoroutine = StartCoroutine(FireContinuously());
     }
+
     private IEnumerator FireContinuously()
     {
         while (isFiring)
@@ -87,6 +101,7 @@ public class PistolShoot : MonoBehaviour
             yield return new WaitForSeconds(fireRate);
         }
     }
+
     public void Shoot()
     {
         RaycastHit hit;
@@ -96,10 +111,12 @@ public class PistolShoot : MonoBehaviour
         {
             audioSource.PlayOneShot(FireSound);
         }
+
         Vector3 direction = GetDirection();
         TrailRenderer trail = Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
 
         StartCoroutine(SpawnTrail(trail, BulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false));
+
         if (Physics.Raycast(BulletSpawnPoint.position, direction, out hit, 100f))
         {
             Target target = hit.transform.GetComponent<Target>();
@@ -108,47 +125,21 @@ public class PistolShoot : MonoBehaviour
                 target.Burst();
             }
         }
-        
+
+        TriggerHaptics();
     }
-    /*public void startShooting()
+
+    private void TriggerHaptics()
     {
-        RaycastHit hit;
-        if (LastShootTime + ShootDelay < Time.time)
+        if (leftController != null)
         {
-            ShootingSystem.Play();
-            Vector3 direction = GetDirection();
-            if (Physics.Raycast(BulletSpawnPoint.position, direction, out hit, float.MaxValue, Mask))
-            {
-                TrailRenderer trail = Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
-
-                StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
-
-                LastShootTime = Time.time;
-                Target target = hit.transform.GetComponent<Target>();
-                Debug.Log("Fire");
-                if(target != null)
-                {
-                    target.Burst();
-
-                }
-            }
-            // this has been updated to fix a commonly reported problem that you cannot fire if you would not hit anything
-            else
-            {
-                Debug.Log("Fire2");
-                TrailRenderer trail = Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
-
-                StartCoroutine(SpawnTrail(trail, BulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false));
-
-                LastShootTime = Time.time;
-            }
+            leftController.SendHapticImpulse(hapticAmplitude, hapticDuration);
         }
-
+        if (rightController != null)
+        {
+            rightController.SendHapticImpulse(hapticAmplitude, hapticDuration);
+        }
     }
-    public void stopShooting()
-    {
-
-    }*/
 
     private Vector3 GetDirection()
     {
@@ -170,8 +161,6 @@ public class PistolShoot : MonoBehaviour
 
     private IEnumerator SpawnTrail(TrailRenderer Trail, Vector3 HitPoint, Vector3 HitNormal, bool MadeImpact)
     {
-        // This has been updated from the video implementation to fix a commonly raised issue about the bullet trails
-        // moving slowly when hitting something close, and not
         Vector3 startPosition = Trail.transform.position;
         float distance = Vector3.Distance(Trail.transform.position, HitPoint);
         float remainingDistance = distance;
@@ -179,11 +168,10 @@ public class PistolShoot : MonoBehaviour
         while (remainingDistance > 0)
         {
             Trail.transform.position = Vector3.Lerp(startPosition, HitPoint, 1 - (remainingDistance / distance));
-
             remainingDistance -= BulletSpeed * Time.deltaTime;
-
             yield return null;
         }
+
         Trail.transform.position = HitPoint;
         if (MadeImpact)
         {
