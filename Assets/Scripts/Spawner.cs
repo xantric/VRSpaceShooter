@@ -32,7 +32,7 @@ public class Spawner : MonoBehaviour
     }
     Vector3 SpawnPosition()
     {
-        float theta = Random.Range(0, Mathf.PI / 6);
+        float theta = Random.Range(0, Mathf.PI / 3);
         float phi = Random.Range(0, Mathf.PI);
         
         float x = spawnRadius * Mathf.Cos(phi) * Mathf.Sin(theta);
