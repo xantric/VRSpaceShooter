@@ -10,6 +10,8 @@ public class Target : MonoBehaviour
     // Start is called before the first frame update
     public void Burst()
     {
+        
+        Score score = FindAnyObjectByType<Score>();
         if (gameObject != null)
         {
             audioSource = gameObject.GetComponent<AudioSource>();
@@ -18,6 +20,7 @@ public class Target : MonoBehaviour
                 Debug.Log("Play Sound");
                 audioSource.PlayOneShot(destroySound);
             }
+            score.change();
             Destroy(gameObject);
         }
     }
