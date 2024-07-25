@@ -20,6 +20,7 @@ public class Spawner : MonoBehaviour
 
     IEnumerator SpawnAsteroids()
     {
+        yield return new WaitForSeconds(6.0f);
         while (true)
         {
             GameObject asteroid = SpawnAsteroid();
@@ -43,7 +44,7 @@ public class Spawner : MonoBehaviour
     {
         Vector3 spawnPosition = SpawnPosition();
         GameObject asteroid = Instantiate(asteroidPrefab, spawnPosition, Quaternion.identity);
-
+        asteroid.AddComponent<AudioSource>();
         float size = Random.Range(minSize, maxSize);
         asteroid.transform.localScale = Vector3.one * size;
 

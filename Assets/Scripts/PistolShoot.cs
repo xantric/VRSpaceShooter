@@ -25,37 +25,87 @@ public class PistolShoot : MonoBehaviour
     private LayerMask Mask;
     [SerializeField]
     private float BulletSpeed = 100;
-
-    private float LastShootTime;
-
     [SerializeField]
-    private float fireRate = 15f;
+    private float fireRate = 0.5f;
+    [SerializeField]
+    private AudioClip FireSound;
+    [SerializeField]
+    private AudioClip ChargingGun;
 
-    private float nextTimeToFire = 0f;
+    private bool isFiring = false;
+    private Coroutine fireCoroutine;
+    private Coroutine delayCoroutine;
+    public float delayBeforeFiring = 1.0f;
+    private AudioSource audioSource;
     void Start()
     {
         XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
-        grabInteractable.activated.AddListener(x => Shoot());
+        grabInteractable.activated.AddListener(StartShooting);
+        grabInteractable.deactivated.AddListener(StopShooting);
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+    }
+    public void StartShooting(ActivateEventArgs args)
+    {
+        if (!isFiring)
+        {
+            isFiring = true;
+            fireCoroutine = StartCoroutine(StartFiringAfterDelay());
+        }
+    }
+    void StopShooting(DeactivateEventArgs args)
+    {
+        if (isFiring)
+        {
+            isFiring = false;
+            if (fireCoroutine != null)
+            {
+                StopCoroutine(fireCoroutine);
+                fireCoroutine = null;
+            }
+            if (delayCoroutine != null)
+            {
+                StopCoroutine(delayCoroutine);
+                delayCoroutine = null;
+            }
+        }
+    }
+    private IEnumerator StartFiringAfterDelay()
+    {
+        if (ChargingGun != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(ChargingGun);
+        }
+        yield return new WaitForSeconds(delayBeforeFiring);
+        fireCoroutine = StartCoroutine(FireContinuously());
+    }
+    private IEnumerator FireContinuously()
+    {
+        while (isFiring)
+        {
+            Shoot();
+            yield return new WaitForSeconds(fireRate);
+        }
     }
     public void Shoot()
     {
         RaycastHit hit;
-        if(Time.time >= nextTimeToFire)
+
+        ShootingSystem.Play();
+        if (FireSound != null && audioSource != null)
         {
-            nextTimeToFire = Time.time + 1f/fireRate;
+            audioSource.PlayOneShot(FireSound);
+        }
+        Vector3 direction = GetDirection();
+        TrailRenderer trail = Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
 
-            ShootingSystem.Play();
-            Vector3 direction = GetDirection();
-            TrailRenderer trail = Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
-
-            StartCoroutine(SpawnTrail(trail, BulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false));
-            if (Physics.Raycast(BulletSpawnPoint.position, direction, out hit, 100f))
+        StartCoroutine(SpawnTrail(trail, BulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false));
+        if (Physics.Raycast(BulletSpawnPoint.position, direction, out hit, 100f))
+        {
+            Target target = hit.transform.GetComponent<Target>();
+            if (target != null)
             {
-                Target target = hit.transform.GetComponent<Target>();
-                if (target != null)
-                {
-                    target.Burst();
-                }
+                target.Burst();
             }
         }
         

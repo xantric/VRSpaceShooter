@@ -718,7 +718,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   BulletSpeed: 100
-  fireRate: 15
+  fireRate: 0.2
+  FireSound: {fileID: 8300000, guid: 3e6e981835fdd7a47a027f069ef5a1f2, type: 3}
+  ChargingGun: {fileID: 8300000, guid: 91ed85ac2d7064c45a36eed02042c462, type: 3}
+  delayBeforeFiring: 1
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,6 +1036,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fd3e07afe5b461490fb8e314976b1b0, type: 3}
+--- !u!114 &738932948 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 664489801923019586, guid: 2fd3e07afe5b461490fb8e314976b1b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 738932947}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4253f32900bcc4d499d675566142ded0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &828065107 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 633007714637671352, guid: 3f29914b413904d40a89e972f348ebd8,
@@ -1065,7 +1080,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   BulletSpeed: 100
-  fireRate: 15
+  fireRate: 0.2
+  FireSound: {fileID: 8300000, guid: 3e6e981835fdd7a47a027f069ef5a1f2, type: 3}
+  ChargingGun: {fileID: 8300000, guid: 91ed85ac2d7064c45a36eed02042c462, type: 3}
+  delayBeforeFiring: 1
 --- !u!114 &828065109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1296,6 +1314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 864939665}
   - component: {fileID: 864939670}
+  - component: {fileID: 864939671}
   m_Layer: 0
   m_Name: Right Controller
   m_TagString: Right Hand
@@ -1563,6 +1582,20 @@ MonoBehaviour:
     m_Reference: {fileID: -6447266317303757838, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   m_ButtonPressPoint: 0.5
+--- !u!114 &864939671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864939664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58e65b9928e824d479c35089d9a6f56f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: {fileID: 828065110}
+  interactor: {fileID: 300598796}
 --- !u!4 &913361727 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 109434732395451517, guid: 65847589f926b734d9eaed6e25f0046b,
@@ -1729,10 +1762,10 @@ MonoBehaviour:
   asteroidPrefab: {fileID: 2216206826894377945, guid: 2c150583a120dbc47a7a88e73832ac69,
     type: 3}
   spawnRadius: 100
-  spawnInterval: 2
+  spawnInterval: 1
   minSize: 1
   maxSize: 1
-  minSpeed: 20
+  minSpeed: 40
   maxSpeed: 50
   player: {fileID: 2029226805}
 --- !u!4 &1037738025
@@ -2018,6 +2051,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1534181144}
   - component: {fileID: 1534181149}
+  - component: {fileID: 1534181150}
   m_Layer: 0
   m_Name: Left Controller
   m_TagString: Left Hand
@@ -2285,6 +2319,21 @@ MonoBehaviour:
     m_Reference: {fileID: -1636515391019944688, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   m_ButtonPressPoint: 0.5
+--- !u!114 &1534181150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534181143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58e65b9928e824d479c35089d9a6f56f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: {fileID: 377273361}
+  interactor: {fileID: 738932948}
+
 --- !u!1 &1539594023
 GameObject:
   m_ObjectHideFlags: 0
