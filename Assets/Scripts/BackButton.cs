@@ -8,5 +8,8 @@ public class BackButton : MonoBehaviour
     public void BackToMenu(){
         SceneManager.LoadScene("1 Start Scene");
     }
-    
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

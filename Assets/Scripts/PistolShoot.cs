@@ -41,6 +41,9 @@ public class PistolShoot : MonoBehaviour
     [SerializeField]
     private float hapticDuration = 0.1f;
 
+    [SerializeField]
+    private XRDirectInteractor interactor;
+
     private bool isFiring = false;
     private Coroutine fireCoroutine;
     private Coroutine delayCoroutine;
@@ -52,7 +55,8 @@ public class PistolShoot : MonoBehaviour
         XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
         grabInteractable.activated.AddListener(StartShooting);
         grabInteractable.deactivated.AddListener(StopShooting);
-
+        grabInteractable.selectExited.AddListener(StopShootingOnRelease);
+        grabInteractable.selectExited.AddListener(GrabGunOnLeaving);
         audioSource = gameObject.AddComponent<AudioSource>();
     }
 
@@ -64,7 +68,32 @@ public class PistolShoot : MonoBehaviour
             fireCoroutine = StartCoroutine(StartFiringAfterDelay());
         }
     }
-
+    void StopShootingOnRelease(SelectExitEventArgs args)
+    {
+        if (isFiring)
+        {
+            isFiring = false;
+            if (fireCoroutine != null)
+            {
+                StopCoroutine(fireCoroutine);
+                fireCoroutine = null;
+            }
+            if (delayCoroutine != null)
+            {
+                StopCoroutine(delayCoroutine);
+                delayCoroutine = null;
+            }
+        }
+    }
+    void GrabGunOnLeaving(SelectExitEventArgs args)
+    {
+        Invoke("AutoGrabGun", 4.0f);
+    }
+    void AutoGrabGun()
+    {
+        XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
+        interactor.interactionManager.SelectEnter(interactor, grabInteractable);
+    }
     void StopShooting(DeactivateEventArgs args)
     {
         if (isFiring)

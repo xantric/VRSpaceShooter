@@ -11,15 +11,10 @@ public class SimulateDeath : MonoBehaviour
     public GameObject Gun2;
     // public int Health;
 
-    void Start()
-    {
-        Invoke("Exit", 10);
-    }
-
     // void HealthSystem(){
 
     // }
-    void Exit(){
+    public void Exit(){
         Menu.SetActive(true);
         RaysObject.SetActive(true);
         MainGameObject.SetActive(false);

@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
 
     IEnumerator SpawnAsteroids()
     {
-        yield return new WaitForSeconds(6.0f);
+        yield return new WaitForSeconds(3.0f);
         while (true)
         {
             GameObject asteroid = SpawnAsteroid();
@@ -32,7 +32,7 @@ public class Spawner : MonoBehaviour
     }
     Vector3 SpawnPosition()
     {
-        float theta = Random.Range(0, Mathf.PI / 3);
+        float theta = Random.Range(0, Mathf.PI / 6);
         float phi = Random.Range(0, Mathf.PI);
         
         float x = spawnRadius * Mathf.Cos(phi) * Mathf.Sin(theta);
