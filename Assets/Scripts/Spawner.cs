@@ -26,7 +26,7 @@ public class Spawner : MonoBehaviour
             GameObject asteroid = SpawnAsteroid();
             yield return new WaitForSeconds(spawnInterval);
             // Optional: Decrease spawn interval over time for difficulty scaling
-            spawnInterval = Mathf.Max(0.5f, spawnInterval - 0.01f);
+            spawnInterval = Mathf.Max(0.5f, spawnInterval - 0.05f);
             DestroyAsteroid(asteroid);
         }
     }
