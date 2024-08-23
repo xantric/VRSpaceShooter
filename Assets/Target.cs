@@ -7,6 +7,7 @@ public class Target : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField]
     private AudioClip destroySound;
+    public GameObject particles;
     // Start is called before the first frame update
     public void Burst()
     {
@@ -21,6 +22,7 @@ public class Target : MonoBehaviour
                 audioSource.PlayOneShot(destroySound);
             }
             score.change();
+            Instantiate(particles, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

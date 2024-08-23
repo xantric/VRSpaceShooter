@@ -173,6 +173,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroySound: {fileID: 8300000, guid: eeed614b3adc1ce44a099e5088b4b021, type: 3}
+  particles: {fileID: 503706752216582783, guid: bfe77310c677059468238311a66c3405,
+    type: 3}
 --- !u!1 &153142
 GameObject:
   m_ObjectHideFlags: 0
