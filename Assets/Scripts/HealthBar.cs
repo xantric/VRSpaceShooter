@@ -7,16 +7,35 @@ public class HealthBar : MonoBehaviour
 {
     Slider _healthSlider;
     public SimulateDeath death;
+    bool isdead = false;
     private void Start()
     {
         _healthSlider = GetComponent<Slider>();
         _healthSlider.maxValue = 100;
         _healthSlider.value = 100;
     }
+    private void Update()
+    {
+        if (isdead)
+        {
+            Target[] asteroids = FindObjectsOfType<Target>();
+            for (int i = 0; i < asteroids.Length; i++)
+            {
+                Destroy(asteroids[i].gameObject);
+            }
+        }
+    }
     public void Damage(float damage)
     {
         _healthSlider.value-=damage;
-        if (_healthSlider.value <=0 )
-        death.Exit();
+        if (_healthSlider.value <= 0)
+        {
+            death.Exit();
+        }
+        if (_healthSlider.value <= 0)
+        {
+            death.Exit();
+            isdead = true;
+        }
     }
 }

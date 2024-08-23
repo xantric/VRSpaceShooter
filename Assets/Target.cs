@@ -23,6 +23,13 @@ public class Target : MonoBehaviour
             }
             score.change();
             Instantiate(particles, transform.position, Quaternion.identity);
+            var replacement = Instantiate(particles, transform.position, transform.rotation);
+
+            var rbs = replacement.GetComponentsInChildren<Rigidbody>();
+            foreach (var rb in rbs)
+            {
+                rb.AddExplosionForce(50, transform.position, 2);
+            }
             Destroy(gameObject);
         }
     }
