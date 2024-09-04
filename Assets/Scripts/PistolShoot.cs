@@ -49,6 +49,7 @@ public class PistolShoot : MonoBehaviour
     private Coroutine delayCoroutine;
     public float delayBeforeFiring = 1.0f;
     private AudioSource audioSource;
+    [SerializeField] AudioSource grabSound;
 
     void Start()
     {
@@ -87,12 +88,13 @@ public class PistolShoot : MonoBehaviour
     }
     void GrabGunOnLeaving(SelectExitEventArgs args)
     {
-        Invoke("AutoGrabGun", 4.0f);
+        Invoke("AutoGrabGun", 2.0f);
     }
     void AutoGrabGun()
     {
         XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
         interactor.interactionManager.SelectEnter(interactor, grabInteractable);
+        grabSound.Play();
     }
     void StopShooting(DeactivateEventArgs args)
     {

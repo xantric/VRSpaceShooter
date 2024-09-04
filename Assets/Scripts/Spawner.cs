@@ -26,13 +26,14 @@ public class Spawner : MonoBehaviour
             GameObject asteroid = SpawnAsteroid();
             yield return new WaitForSeconds(spawnInterval);
             // Optional: Decrease spawn interval over time for difficulty scaling
-            spawnInterval = Mathf.Max(0.5f, spawnInterval - 0.01f);
+            spawnInterval = Mathf.Max(0.5f, spawnInterval - 0.05f);
             DestroyAsteroid(asteroid);
         }
     }
     Vector3 SpawnPosition()
     {
-        float theta = Random.Range(0, Mathf.PI / 6);
+        
+        float theta = Mathf.Acos(Random.Range(Mathf.Cos(Mathf.PI / 6),1));
         float phi = Random.Range(0, Mathf.PI);
         
         float x = spawnRadius * Mathf.Cos(phi) * Mathf.Sin(theta);

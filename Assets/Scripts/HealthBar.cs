@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     Slider _healthSlider;
-    public SimulateDeath death;
     bool isdead = false;
+    public SimulateDeath death;
     private void Start()
     {
         _healthSlider = GetComponent<Slider>();
@@ -19,7 +19,7 @@ public class HealthBar : MonoBehaviour
         if (isdead)
         {
             Target[] asteroids = FindObjectsOfType<Target>();
-            for (int i = 0; i < asteroids.Length; i++)
+            for(int i = 0; i < asteroids.Length; i++)
             {
                 Destroy(asteroids[i].gameObject);
             }
